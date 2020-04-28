@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'taggit',
     'social_django',
     'grades',
+    'api',
+    'rest_framework',
 )
 
 MIDDLEWARE = (
