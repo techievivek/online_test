@@ -12,8 +12,8 @@ class CourseList(APIView):
     List all snippets, or create a new snippet.
     """
     def get(self, request, format=None):
-        snippets = Course.objects.all()
-        serializer = CourseSerializer(snippets, many=True)
+        courses = Course.objects.all()
+        serializer = CourseSerializer(courses, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
