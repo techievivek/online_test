@@ -434,10 +434,11 @@ class QuitQuiz(APIView):
 
 class CourseCreate(APIView):
     def post(self,request):
-        username=request.data['creator']
-        user=get_object_or_404(User,username=username)
-        user_id=user.id 
+        username=request.data['creator'] #extract creator name from the request data.
+        user=get_object_or_404(User,username=username) #look up in database
+        user_id=user.id  #if exists, extract the user id
         request.data['creator']=user_id
+        # Add the creator id for modules and units
         for learning_module in request.data['learning_module']:
             learning_module['creator']=user_id
             for learning_unit in learning_module["learning_unit"]:
@@ -445,7 +446,7 @@ class CourseCreate(APIView):
                     learning_unit['quiz']['creator']=user.id
                 if learning_unit['type']=='lesson':
                     learning_unit['lesson']['creator']=user.id
-        serializer=CourseSerializer(data=request.data)
+        serializer=CourseSerializer(data=request.data) #send the serializer data to course_serializer
         modules=[]
         for learning_module in request.data['learning_module']:
             module_serializer=LearningModuleSerializer(data=learning_module)
